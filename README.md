@@ -11,7 +11,8 @@
 
 ![gaon-care promotional app image](docs/assets/promo/gaon-care-app-store-promo.png)
 
-`gaon-care`는 학생이 우산 QR을 찍고 5자리 학번을 입력해 빠르게 대여하고, 반납할 때는 QR만 다시 찍으면 끝나는 학교 운영 도구입니다. 학생회는 같은 데이터로 현재 재고, 대여 현황, 반납 기한 초과 우산, QR 라벨 출력까지 한 화면 흐름으로 관리합니다.
+`gaon-care`는 대치 중학교 학생이 우산에 붙어있는 QR코드를 태블릿에 찍은다음, 자신의 학번을 입력해 대여할 수 있게한 서비스입니다. 
+학생회는 백오피스를 통해서 우산 재고, 대여 현황, 반납 기한 초과 우산, QR 라벨 출력을 관리할 수 있습니다. 
 
 ## Product Surface
 
@@ -24,8 +25,6 @@
 | ![Umbrella inventory rack map](docs/assets/readme/bo-umbrellas.png) | ![Printable umbrella QR labels](docs/assets/readme/qr-labels.png) |
 
 ## Try It (체험 모드)
-
-물리 QR 라벨이 없어도 배포 링크만으로 대여~반납 흐름을 그대로 체험할 수 있습니다. `/fo` 홈의 `테스트하러 왔어요` → `/fo/demo`에서 체험용 우산(29·30·31번)의 딥링크 QR을 폰 카메라로 찍으면, 폰에서 실제 대여 화면이 열립니다. 체험은 실제 재고(1~28번)와 운영 데이터를 건드리지 않습니다.
 
 ![FO 체험(데모) 대여~반납 플로우](docs/assets/readme/demo-flow.png)
 
