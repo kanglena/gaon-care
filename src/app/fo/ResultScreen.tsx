@@ -6,9 +6,10 @@ type ResultScreenProps = {
   variant: "success" | "error";
   message: string;
   onReset: () => void;
+  secondaryAction?: { label: string; onClick: () => void };
 };
 
-export function ResultScreen({ variant, message, onReset }: ResultScreenProps) {
+export function ResultScreen({ variant, message, onReset, secondaryAction }: ResultScreenProps) {
   const isSuccess = variant === "success";
 
   return (
@@ -42,10 +43,22 @@ export function ResultScreen({ variant, message, onReset }: ResultScreenProps) {
         {message}
       </p>
 
+      {secondaryAction ? (
+        <button
+          type="button"
+          onClick={secondaryAction.onClick}
+          className="mt-9 h-14 w-full max-w-md rounded-2xl bg-teal-700 text-lg font-bold text-white transition active:bg-teal-800 md:mt-11 md:h-16 md:max-w-lg md:text-2xl"
+        >
+          {secondaryAction.label}
+        </button>
+      ) : null}
+
       <button
         type="button"
         onClick={onReset}
-        className="mt-9 h-14 w-full max-w-md rounded-2xl border border-[#d4e6e1] bg-white text-lg font-bold text-slate-950 transition active:bg-slate-50 md:mt-11 md:h-16 md:max-w-lg md:text-2xl"
+        className={`h-14 w-full max-w-md rounded-2xl border border-[#d4e6e1] bg-white text-lg font-bold text-slate-950 transition active:bg-slate-50 md:h-16 md:max-w-lg md:text-2xl ${
+          secondaryAction ? "mt-4 md:mt-4" : "mt-9 md:mt-11"
+        }`}
       >
         처음으로
       </button>
