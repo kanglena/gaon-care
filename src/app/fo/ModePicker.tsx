@@ -59,7 +59,7 @@ export function ModePicker({ onPick }: ModePickerProps) {
         href="/fo/demo"
         className="mt-4 text-xs font-semibold text-slate-400 underline underline-offset-4 md:text-sm"
       >
-        🧪 테스트하러 왔어요
+        테스트하러 왔어요
       </a>
     </section>
   );
