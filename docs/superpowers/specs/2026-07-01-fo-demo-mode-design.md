@@ -47,7 +47,10 @@ values
 
 ### 공유 상수
 
-`DEMO_UMBRELLA_IDS = ['umb-29', 'umb-30', 'umb-31']` — allowlist·리셋·QR 생성이 모두 이 한 곳을 참조한다. (예: `src/domain/demo.ts`)
+- `DEMO_UMBRELLA_IDS = ['umb-29', 'umb-30', 'umb-31']` — allowlist·리셋·QR 생성이 모두 이 한 곳을 참조한다.
+- `DEMO_STUDENT_ID = '00000'` — 데모 대여가 사용하는 고정 학번(제약 `^[0-9]{5}$` 통과). 실제 학생 학번과 겹치지 않는 값.
+
+(예: `src/domain/demo.ts`)
 
 ### 1. 진입점
 
@@ -67,7 +70,8 @@ values
 
 - `/fo`가 쿼리 파라미터 `?u=<umbrellaId>`를 읽는다.
 - **allowlist 검증**: `u`가 `DEMO_UMBRELLA_IDS`에 있을 때만 자동 시작. (그래야 `?u=umb-5` 같은 값으로 실제 재고 우산이 원격 대여되는 구멍이 생기지 않는다.)
-- 유효한 데모 `u`면: `umbrellaId` 세팅, 기본 모드 `borrow`, 곧바로 `student_id` 스텝으로 착지("29번 우산 스캔됨 → 학번 입력"). `isDemo=true` 표시.
+- 유효한 데모 `u`면: `umbrellaId` 세팅, 기본 모드 `borrow`, 곧바로 `student_id` 스텝으로 착지("29번 우산 스캔됨 → 학번"). `isDemo=true` 표시.
+- **학번은 `DEMO_STUDENT_ID`(`00000`)로 자동 입력·잠금** 하고 "체험 모드 · 학번 자동" 안내 표시. 방문자는 대여 버튼만 누른다(화면 흐름은 실제와 동일, 실제 학번은 저장되지 않음). `StudentIdPad`에 읽기전용/잠금 처리 필요.
 - allowlist 밖 `u`는 무시하고 평소처럼 홈 표시.
 
 ### 4. 데이터 안전장치
@@ -94,8 +98,8 @@ values
 2. `/fo/demo` 마운트 → `POST /api/demo/reset` (29/30/31 초기화).
 3. 화면에 딥링크 QR 3개 표시.
 4. 방문자가 폰 카메라로 `umb-30` QR 촬영 → 폰 브라우저가 `/fo?u=umb-30` 오픈.
-5. `FoFlow`가 allowlist 통과 확인 → "30번 우산 → 학번 입력" 스텝.
-6. 학번 입력 → `POST /api/rentals/borrow` → `umb-30` status `borrowed`, `rentals` 행 생성.
+5. `FoFlow`가 allowlist 통과 확인 → "30번 우산 → 학번(자동 `00000`)" 스텝.
+6. 대여 버튼 → `POST /api/rentals/borrow` (studentId=`00000`) → `umb-30` status `borrowed`, `rentals` 행 생성.
 7. 결과 화면 → `반납도 해보기` → `POST /api/rentals/return` → status `available`.
 
 ## 에러 처리
