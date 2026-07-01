@@ -54,6 +54,13 @@ export function ModePicker({ onPick }: ModePickerProps) {
       <p className="mt-8 text-xs font-semibold text-slate-400 md:text-base">
         우산이 필요하면 대여, 다 썼으면 반납
       </p>
+
+      <a
+        href="/fo/demo"
+        className="mt-4 text-xs font-semibold text-slate-400 underline underline-offset-4 md:text-sm"
+      >
+        테스트하러 왔어요
+      </a>
     </section>
   );
 }
