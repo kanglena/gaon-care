@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { ModePicker } from "@/app/fo/ModePicker";
 import { ResultScreen } from "@/app/fo/ResultScreen";
 import { ScannerPanel } from "@/app/fo/ScannerPanel";
 import { StudentIdPad } from "@/app/fo/StudentIdPad";
 import { type ApiResult, type Mode, umbrellaDisplayName } from "@/app/fo/types";
+import { DEMO_STUDENT_ID, parseDemoDeepLink } from "@/domain/demo";
 
 type Step = "home" | "scan" | "student_id" | "done" | "error";
 
@@ -34,6 +35,27 @@ export function FoFlow() {
   const [studentId, setStudentId] = useState("");
   const [message, setMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDemo, setIsDemo] = useState(false);
+  const [demoReturnable, setDemoReturnable] = useState(false);
+
+  // 데모 딥링크: `/fo?u=umb-29` (allowlist 통과한 데모 우산만) → 고정 학번으로
+  // 대여 흐름에 곧바로 착지. 새로고침 시 홈으로 돌아가도록 쿼리를 제거한다.
+  useEffect(() => {
+    const demoUmbrellaId = parseDemoDeepLink(window.location.search);
+    if (!demoUmbrellaId) {
+      return;
+    }
+    /* eslint-disable react-hooks/set-state-in-effect -- one-time sync from
+     * window.location (external system) on mount to route a demo deep-link;
+     * not a derived-state anti-pattern. */
+    setIsDemo(true);
+    setMode("borrow");
+    setUmbrellaId(demoUmbrellaId);
+    setStudentId(DEMO_STUDENT_ID);
+    setStep("student_id");
+    /* eslint-enable react-hooks/set-state-in-effect */
+    window.history.replaceState(null, "", "/fo");
+  }, []);
 
   function reset() {
     setStep("home");
@@ -42,6 +64,8 @@ export function FoFlow() {
     setStudentId("");
     setMessage("");
     setIsSubmitting(false);
+    setIsDemo(false);
+    setDemoReturnable(false);
   }
 
   function pickMode(picked: Mode) {
@@ -82,6 +106,9 @@ export function FoFlow() {
       return;
     }
 
+    if (isDemo) {
+      setDemoReturnable(true);
+    }
     setMessage(`${umbrellaDisplayName(umbrellaId)} 대여 완료`);
     setStep("done");
   }
@@ -107,6 +134,7 @@ export function FoFlow() {
       return;
     }
 
+    setDemoReturnable(false);
     if (result.ok && result.data.blacklisted && result.data.blacklistUntil) {
       const until = new Intl.DateTimeFormat("ko-KR", {
         timeZone: "Asia/Seoul",
@@ -143,6 +171,7 @@ export function FoFlow() {
                 onChange={setStudentId}
                 onSubmit={borrow}
                 disabled={isSubmitting}
+                locked={isDemo}
               />
             </section>
           ) : null}
@@ -152,6 +181,14 @@ export function FoFlow() {
               variant={step === "error" ? "error" : "success"}
               message={message}
               onReset={reset}
+              secondaryAction={
+                isDemo && step === "done" && demoReturnable
+                  ? {
+                      label: `방금 빌린 ${umbrellaDisplayName(umbrellaId)} 반납해보기`,
+                      onClick: () => returnUmbrella(umbrellaId),
+                    }
+                  : undefined
+              }
             />
           ) : null}
         </div>
