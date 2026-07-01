@@ -77,33 +77,3 @@
 npm install
 npm run dev
 ```
-
-Open `http://localhost:3000/fo` for the student-facing flow.
-
-Required environment variables:
-
-```bash
-NEXT_PUBLIC_SUPABASE_URL=
-NEXT_PUBLIC_SUPABASE_ANON_KEY=
-SUPABASE_SERVICE_ROLE_KEY=
-FO_KIOSK_PASSCODE=
-KIOSK_COOKIE_SECRET=
-SUPABASE_DB_PASSWORD=
-ADMIN_PASSWORD=
-NEXT_PUBLIC_APP_URL=
-```
-
-`NEXT_PUBLIC_APP_URL` should point to the running app URL when server-rendered BO pages fetch local API routes.
-
-## Verification
-
-```bash
-npm run build
-npm run lint
-npm run typecheck
-npm run test
-```
-
-## Design Notes
-
-The UI is intentionally quiet and operational: teal for primary actions, amber for attention states, red only for destructive or error states, and dense dashboard surfaces for student council scanning.
