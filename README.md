@@ -23,6 +23,12 @@
 | --- | --- |
 | ![Umbrella inventory rack map](docs/assets/readme/bo-umbrellas.png) | ![Printable umbrella QR labels](docs/assets/readme/qr-labels.png) |
 
+## Try It (체험 모드)
+
+물리 QR 라벨이 없어도 배포 링크만으로 대여~반납 흐름을 그대로 체험할 수 있습니다. `/fo` 홈의 `테스트하러 왔어요` → `/fo/demo`에서 체험용 우산(29·30·31번)의 딥링크 QR을 폰 카메라로 찍으면, 폰에서 실제 대여 화면이 열립니다. 체험은 실제 재고(1~28번)와 운영 데이터를 건드리지 않습니다.
+
+![FO 체험(데모) 대여~반납 플로우](docs/assets/readme/demo-flow.png)
+
 ## Why It Exists
 
 - 종이 장부 대신 QR 기반 기록으로 우산 ID와 학번 형식을 고정합니다.
@@ -55,6 +61,7 @@
 | Route | Purpose |
 | --- | --- |
 | `/fo` | 학생용 우산 대여/반납 키오스크 |
+| `/fo/demo` | 체험(데모) 모드 — 딥링크 QR로 대여/반납 체험 |
 | `/bo` | 학생회 관리자 대시보드 |
 | `/bo/umbrellas` | 우산 재고 배치도 및 상태 관리 |
 | `/bo/umbrellas/print` | 우산 QR 라벨 선택 및 출력 |
