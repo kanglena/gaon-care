@@ -5,14 +5,21 @@ type StudentIdPadProps = {
   onChange: (value: string) => void;
   onSubmit: () => void;
   disabled?: boolean;
+  locked?: boolean;
 };
 
 const STUDENT_ID_LENGTH = 5;
 const KEYS = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "back", "0", "clear"];
 
-export function StudentIdPad({ value, onChange, onSubmit, disabled = false }: StudentIdPadProps) {
+export function StudentIdPad({
+  value,
+  onChange,
+  onSubmit,
+  disabled = false,
+  locked = false,
+}: StudentIdPadProps) {
   function press(key: string) {
-    if (disabled) {
+    if (disabled || locked) {
       return;
     }
     if (key === "back") {
@@ -30,6 +37,10 @@ export function StudentIdPad({ value, onChange, onSubmit, disabled = false }: St
 
   return (
     <section className="mx-auto flex w-full max-w-md flex-col items-center gap-7 md:max-w-lg md:gap-9">
+      {locked ? (
+        <p className="text-sm font-semibold text-teal-700 md:text-base">체험 모드 · 학번 자동 입력</p>
+      ) : null}
+
       <div className="flex gap-3 md:gap-4" aria-label={`학번 ${value.length}자리 입력됨`}>
         {Array.from({ length: STUDENT_ID_LENGTH }).map((_, index) => (
           <span
@@ -50,7 +61,7 @@ export function StudentIdPad({ value, onChange, onSubmit, disabled = false }: St
               className={`flex h-[72px] w-[72px] items-center justify-center rounded-full border border-slate-200 bg-white font-bold text-slate-950 shadow-sm transition active:scale-95 active:bg-teal-50 disabled:text-slate-300 md:h-[96px] md:w-[96px] ${
                 isAction ? "text-sm text-slate-500 md:text-base" : "text-2xl md:text-3xl"
               }`}
-              disabled={disabled}
+              disabled={disabled || locked}
               onClick={() => press(key)}
             >
               {label}
