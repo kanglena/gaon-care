@@ -57,7 +57,7 @@ export function ResultScreen({ variant, message, onReset, secondaryAction }: Res
         type="button"
         onClick={onReset}
         className={`h-14 w-full max-w-md rounded-2xl border border-[#d4e6e1] bg-white text-lg font-bold text-slate-950 transition active:bg-slate-50 md:h-16 md:max-w-lg md:text-2xl ${
-          secondaryAction ? "mt-4 md:mt-4" : "mt-9 md:mt-11"
+          secondaryAction ? "mt-4" : "mt-9 md:mt-11"
         }`}
       >
         처음으로
