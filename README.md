@@ -11,7 +11,8 @@
 
 ![gaon-care promotional app image](docs/assets/promo/gaon-care-app-store-promo.png)
 
-`gaon-care`는 학생이 우산 QR을 찍고 5자리 학번을 입력해 빠르게 대여하고, 반납할 때는 QR만 다시 찍으면 끝나는 학교 운영 도구입니다. 학생회는 같은 데이터로 현재 재고, 대여 현황, 반납 기한 초과 우산, QR 라벨 출력까지 한 화면 흐름으로 관리합니다.
+`gaon-care`는 대치 중학교 학생이 우산에 붙어있는 QR코드를 태블릿에 찍은다음, 자신의 학번을 입력해 대여할 수 있게한 서비스입니다. 
+학생회는 백오피스를 통해서 우산 재고, 대여 현황, 반납 기한 초과 우산, QR 라벨 출력을 관리할 수 있습니다. 
 
 ## Product Surface
 
